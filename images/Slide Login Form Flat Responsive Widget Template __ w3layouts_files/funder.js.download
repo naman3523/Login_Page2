@@ -1,0 +1,38 @@
+(function () {
+  let timeout;
+
+  function init(attempts) {
+    clearTimeout(timeout)
+    attempts = attempts || 1
+    if (attempts > 3) return
+    if (typeof CodeFundAd === 'undefined') {
+      timeout = setTimeout(function () { init(attempts + 1) }, 350)
+      return
+    }
+    new CodeFundAd({"selector":"#codefund_ad","template":"bottom-bar","theme":"light","fallback":false,"urls":{"impression":"https://codefund.io/display/732878e7-74c5-4711-a677-a9a507b06cf0.gif","campaign":"https://codefund.io/impressions/732878e7-74c5-4711-a677-a9a507b06cf0/click?campaign_id=465\u0026creative_id=443\u0026property_id=441\u0026template=bottom-bar\u0026theme=light","poweredBy":"https://codefund.io/invite/uaY8mStZDXQ","adblock":"https://cdn2.codefund.app/assets/px.js","uplift":"https://codefund.io/impressions/732878e7-74c5-4711-a677-a9a507b06cf0/uplift?advertiser_id=727"},"creative":{"name":"Open Source 2","headline":" Frontend Masters + Open Source = ❤️","body":" $80,000+ 💰 donated to Webpack, Vue \u0026 more!","cta":"View Donations","imageUrls":{"icon":"https://cdn2.codefund.app/TPuGwXDX9LHcfNRn9F625Uc6","small":"https://cdn2.codefund.app/vqiL8qzP2wR5cNeRbCvsUYod","large":"https://cdn2.codefund.app/SBRG6DZ1oz25QjVkUuYdbuB3","wide":"https://cdn2.codefund.app/PNYpLWrWAjYc5AxbxjKDKz1x"}}})
+  }
+
+  const codefundStylesheetId = 'codefund-style'
+  const codefundScriptId = 'codefund-script'
+
+  if (!document.getElementById(codefundStylesheetId)) {
+    const stylesheet = document.createElement('link')
+    stylesheet.setAttribute('id', codefundStylesheetId)
+    stylesheet.setAttribute('rel', 'stylesheet')
+    stylesheet.setAttribute('media', 'all')
+    stylesheet.setAttribute('href', 'https://codefund.io/packs/css/code_fund_ad-b95b86ee.css')
+    stylesheet.addEventListener('load', init)
+    document.head.appendChild(stylesheet)
+  }
+
+  if (document.getElementById(codefundScriptId)) {
+    init()
+  } else {
+    const script = document.createElement('script')
+    script.setAttribute('id', codefundScriptId)
+    script.setAttribute('type', 'text/javascript')
+    script.setAttribute('src', 'https://codefund.io/packs/js/code_fund_ad-2de41cf4ad32a2efdfa1.js')
+    script.addEventListener('load', init)
+    document.head.appendChild(script)
+  }
+})()
